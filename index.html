@@ -21,12 +21,49 @@
 <body>
     <h1>Welcome to My GitHub Pages Site!</h1>
     <p>This is a minimal HTML page hosted on GitHub Pages.</p>
-    <form>
-        <label>tenant ID</label>
-        <label>environment ID</label>
-        <label>company ID</label>
-        <label>Oauth client key</label>
-        <label>Oauth secret key</label>
-    </form>
+    <div style="margin-top: 30px; text-align: left; display: inline-block;">
+        <form id="formatter">
+            <label>tenant ID</label>
+            <input type="text" name="tenantId" required><br><br>
+            <label>environment ID</label>
+            <input type="text" name="environmentId" required><br><br>
+            <label>company ID</label>
+            <input type="text" name="companyId" required><br><br>
+            <label>Oauth client key</label>
+            <input type="text" name="oauthClientKey" required><br><br>
+            <label>Oauth secret key</label>
+            <input type="text" name="oauthSecretKey" required><br><br>
+            <button type="submit">Submit</button>
+        </form>
+        <ul id="output"></ul>
+        <script>
+            document.getElementById("formatter").addEventListener("submit", function (e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const tenantId = formData.get("tenantId");
+                const environmentId = formData.get("environmentId");
+                const companyId = formData.get("companyId");
+                const oauthClientKey = formData.get("oauthClientKey");
+                const oauthSecretKey = formData.get("oauthSecretKey");
+
+                output.innerHTML = `
+                    <li>BC Service Page Url: https://api.businesscentral.dynamics.com/v2.0/${tenantId}/${environmentId}/api/dynamicseShop/eShop/v2.0/companies(${companyId})/</li>
+                    <li>BC Code Unit Url: https://api.businesscentral.dynamics.com/v2.0/${tenantId}/${environmentId}/ODataV4/</li>
+                    <li>Authentication Type: OAuthAuthentication</li>
+                    <li>BC Client App Id: ${oauthClientKey}</li>
+                    <li>BC Client App Secret: ${oauthSecretKey}</li>
+                    <li>Default Company: ${companyId}</li>
+                    <li>Active Directory Scope: https://api.businesscentral.dynamics.com/.default</li>
+                    <li>Active Directory Token Url: https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token</li>
+                    <li>Store: Store</li>
+                `;
+                    
+    
+    
+
+                console.log("Form submitted");
+            })
+        </script>
+    </div>
 </body>
 </html>
